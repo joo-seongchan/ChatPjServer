@@ -5,6 +5,8 @@ var app = express();
 
 let user = [];
 
+let chat = [];
+
 app.use(express.static(path.join(__dirname, `../chat/build`)));
 
 const bodyParser = require("body-parser");
@@ -27,7 +29,16 @@ app.post(`/`, function (req, res) {
 });
 
 app.get("/chat", function (req, res) {
-  res.send(user);
+  res(user);
+});
+
+app.post(`/chat`, function (req, res) {
+  var text = req.param("text");
+  var textData = {
+    text: text,
+  };
+  chat.push(textData);
+  res.send(chat);
 });
 
 app.listen(5000, function () {
